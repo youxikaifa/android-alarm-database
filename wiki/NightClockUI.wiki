@@ -1,4 +1,5 @@
 #summary Common entry-point for 'Night Clock' applications
+#labels Featured
 
 = Introduction =
 

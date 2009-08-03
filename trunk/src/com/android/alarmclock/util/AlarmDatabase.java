@@ -236,6 +236,11 @@ public class AlarmDatabase {
         return c;
     }
 
+    /**
+     * Call startActivity() on result of this method to show default UI for changing Alarm Clock settings
+     *
+     * @return Intent for changing alarm settings
+     */
     public static Intent changeAlarmSettings() {
         final Intent i = new Intent();
         i.setAction(Intent.ACTION_MAIN);

@@ -1,3 +1,5 @@
+#summary Common entry-point for 'Night Clock' applications
+
 = Introduction =
 
 If you are developing Night Clock-style application, please add an additional intent to your application main class so it could be launched as an abstract 'Night clock UI'.

@@ -1,0 +1,5 @@
+# common entry-point for 'Night Clock' applications propsal
+
+= Introduction =
+
+= Example =

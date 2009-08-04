@@ -15,7 +15,7 @@ It will take 3-4 lines of xml code but the effect is a real synergy of similar a
 
 Include this into your startup activity manifest:
 {{{
-<intent-filter . . . >
+<intent-filter>
   <action android:name="android.alarmclock.NightClockUI" />
   <category android:name="android.intent.category.DEFAULT"/>
 </intent-filter>

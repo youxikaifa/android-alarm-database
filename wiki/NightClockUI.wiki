@@ -17,7 +17,22 @@ Include this into your startup activity manifest:
 {{{
 <intent-filter . . . >
   <action android:name="android.alarmclock.NightClockUI" />
+  <category android:name="android.intent.category.DEFAULT"/>
 </intent-filter>
+}}}
+
+Now, any application could start yours with few lines of code:
+{{{
+try {
+
+    final Intent i = new Intent();
+    i.setAction("android.alarmclock.NightClockUI");
+    i.addCategory(Intent.CATEGORY_DEFAULT);
+    startActivity(i);
+
+} catch (ActivityNotFoundException e) {
+    Log.w("Tag", "No NightClockUI found", e);
+}
 }}}
 
 Read more:

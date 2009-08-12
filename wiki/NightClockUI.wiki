@@ -5,11 +5,9 @@
 
 If you are developing Night Clock-style application, please add an additional intent to your application main class so it could be launched as an abstract 'Night clock UI'.
 
-So, given 'sleep time recorder' application: user clicks 'go to sleep' button, application records the time in the database and will try to launch this intent to show nice UI.
+So, given 'sleep time recorder' application: user clicks 'go to sleep' button, application records the time in the database and will try to launch this intent to show nice UI. If there will be several applications installed with this Inent filter, user will be automatically prompted which to launch (and optionally set to preferred).
 
-If there will be several applications installed with this Inent filter, user will be automatically prompted which to launch (and optionally set to preferred).
-
-It will take 3-4 lines of xml code but the effect is a real synergy of similar applications!
+*It will take 3-4 lines of xml code only* but the effect is a real synergy of similar applications!
 
 = Example =
 

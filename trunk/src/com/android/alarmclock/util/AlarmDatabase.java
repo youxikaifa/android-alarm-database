@@ -189,7 +189,7 @@ public class AlarmDatabase {
             return null;
         }
 
-        Record nearest = null;
+        Record nearest = new Record(cur);
 
         do {
             // Get the field values
@@ -199,7 +199,7 @@ public class AlarmDatabase {
 
             final Calendar cal = calculateNextAlarm(hour, minute, daysOfWeek);
 
-            if (nearest == null || cal.compareTo(nearest.getNearestAlarmDate()) == -1) {
+            if (cal.compareTo(nearest.getNearestAlarmDate()) == -1) {
                 nearest = new Record(cur);
                 nearest.nearestAlarmDate = cal;
             }

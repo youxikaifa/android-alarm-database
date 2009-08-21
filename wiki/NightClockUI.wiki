@@ -1,7 +1,11 @@
 #summary Common entry-point for 'Night Clock' applications
 #labels Featured
 
-= Introduction =
+= About =
+Dreams is a big part of our life and Alarm clock is one of mostly used features of mobile phones.
+Android provides great means of application integration. 
+
+= Delelopers Introduction =
 
 If you are developing Night Clock-style application, please add an additional intent to your application main class so it could be launched as an abstract 'Night clock UI'.
 
@@ -9,7 +13,7 @@ So, given 'sleep time recorder' application: user clicks 'go to sleep' button, a
 
 *It will take 3-4 lines of xml code only* but the effect is a real synergy of similar applications!
 
-= Example =
+== Example ==
 
 Include this into your startup activity manifest:
 {{{

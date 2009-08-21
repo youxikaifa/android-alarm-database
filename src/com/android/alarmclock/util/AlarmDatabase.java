@@ -280,7 +280,8 @@ public class AlarmDatabase {
 
     @Override
     protected void finalize() throws Throwable {
-        mContentResolver.unregisterContentObserver(mContentObserver);
+        if (mContentResolver != null && mContentObserver != null)
+            mContentResolver.unregisterContentObserver(mContentObserver);
         super.finalize();
     }
 }

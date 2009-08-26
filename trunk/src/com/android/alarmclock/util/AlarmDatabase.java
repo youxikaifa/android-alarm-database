@@ -126,9 +126,10 @@ public class AlarmDatabase {
      *
      * @param contentResolver get from context
      * @param contentObserver Runnable to be called if database changes
+     * @param handler
      */
-    public AlarmDatabase(ContentResolver contentResolver, final Runnable contentObserver) {
-        this(contentResolver, new ContentObserver(new Handler()) {
+    public AlarmDatabase(ContentResolver contentResolver, final Runnable contentObserver, final Handler handler) {
+        this(contentResolver, new ContentObserver(handler) {
             @Override
             public boolean deliverSelfNotifications() {
                 return false;

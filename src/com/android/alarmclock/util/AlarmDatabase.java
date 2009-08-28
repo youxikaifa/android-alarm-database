@@ -2,6 +2,8 @@ package com.android.alarmclock.util;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
@@ -168,7 +170,7 @@ public class AlarmDatabase {
                 null);
 
         if (!cur.moveToFirst()) {
-            Log.d("AlarmDatabase", "no records");
+            Log.w("AlarmDatabase", "no record for id " + alarmId);
             return null;
         }
         Record entity = new Record(cur);
@@ -185,8 +187,13 @@ public class AlarmDatabase {
                 new String[]{"1"},
                 null);
 
+        if (cur == null) {
+            Log.w("AlarmDatabase", "Cannot resolve provider for " + ALARM_URI);
+            return null;
+        }
+
         if (!cur.moveToFirst()) {
-            Log.d("AlarmDatabase", "no records");
+            Log.d("AlarmDatabase", "No enabled alarms");
             return null;
         }
 
@@ -237,18 +244,35 @@ public class AlarmDatabase {
         return c;
     }
 
+    @Deprecated
+    public static Intent changeAlarmSettings() {
+        return changeAlarmSettings(null);
+    }
+
     /**
      * Call startActivity() on result of this method to show default UI for changing Alarm Clock settings
      *
+     * @param packageManager may be null
      * @return Intent for changing alarm settings
      */
-    public static Intent changeAlarmSettings() {
+    public static Intent changeAlarmSettings(PackageManager packageManager) {
         final Intent i = new Intent();
         i.setAction(Intent.ACTION_MAIN);
         i.setClassName("com.android.alarmclock", "com.android.alarmclock.AlarmClock");
-//        i.setClassName("com.android.alarmclock", "com.android.alarmclock.SetAlarm"); todo - private access
+        if (packageManager == null) return i;
+
+        ResolveInfo resolved = packageManager.resolveActivity(i, PackageManager.MATCH_DEFAULT_ONLY);
+        if (resolved != null) return i; // yes, we have default Alarm Clock Application
+
+        i.setClassName("com.htc.android.worldclock", "com.htc.android.worldclock.WorldClockTabControl");
+        resolved = packageManager.resolveActivity(i, PackageManager.MATCH_DEFAULT_ONLY);
+        if (resolved != null) return i; // HTC custom UI
+
+        Log.e("AlarmDatabase", "No known Alarm Clock UI provider");
+        return null;
+
+//        i.setClassName("com.android.alarmclock", "com.android.alarmclock.SetAlarm"); - private access
 //        i.putExtra(Alarms.ID, next_alarm_id);
-        return i;
     }
 
     public static Intent startNightClock() {

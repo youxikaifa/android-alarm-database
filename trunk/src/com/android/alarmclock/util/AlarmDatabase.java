@@ -74,7 +74,7 @@ public class AlarmDatabase {
 
         public Calendar getNearestAlarmDate() {
             if (nearestAlarmDate == null) {
-                this.nearestAlarmDate = calculateNextAlarm(hour, minute, daysOfWeek);
+                this.nearestAlarmDate = calculateNextAlarm(hour, minute, daysOfWeek, System.currentTimeMillis());
             }
             return nearestAlarmDate;
         }
@@ -180,6 +180,10 @@ public class AlarmDatabase {
     }
 
     public Record getNearestEnabledAlarm() {
+        return getNearestEnabledAlarm(System.currentTimeMillis());
+    }
+
+    public Record getNearestEnabledAlarm(long minimumTime) {
         final Cursor cur = mContentResolver.query(
                 ALARM_URI,
                 null,
@@ -197,7 +201,8 @@ public class AlarmDatabase {
             return null;
         }
 
-        Record nearest = new Record(cur);
+        new Record(cur); // NB: side-effect!!
+        Record nearest = null;
 
         do {
             // Get the field values
@@ -205,9 +210,9 @@ public class AlarmDatabase {
             int minute = cur.getInt(column_minutes);
             int daysOfWeek = cur.getInt(column_daysofweek);
 
-            final Calendar cal = calculateNextAlarm(hour, minute, daysOfWeek);
+            final Calendar cal = calculateNextAlarm(hour, minute, daysOfWeek, minimumTime);
 
-            if (cal.compareTo(nearest.getNearestAlarmDate()) == -1) {
+            if ((nearest == null || cal.compareTo(nearest.getNearestAlarmDate()) == -1) && cal.getTimeInMillis() > minimumTime) {
                 nearest = new Record(cur);
                 nearest.nearestAlarmDate = cal;
             }
@@ -217,11 +222,11 @@ public class AlarmDatabase {
         return nearest;
     }
 
-    public static Calendar calculateNextAlarm(int hour, int minute, int daysOfWeek) {
+    public static Calendar calculateNextAlarm(int hour, int minute, int daysOfWeek, long minimumTime) {
 
         // newRecord with now
         Calendar c = Calendar.getInstance();
-        c.setTimeInMillis(System.currentTimeMillis());
+        c.setTimeInMillis(minimumTime);
 
         int nowHour = c.get(Calendar.HOUR_OF_DAY);
         int nowMinute = c.get(Calendar.MINUTE);

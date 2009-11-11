@@ -179,11 +179,11 @@ public class AlarmDatabase {
         return entity;
     }
 
-    public Record getNearestEnabledAlarm() {
+    public Record getNearestEnabledAlarm() throws UnsupportedOperationException {
         return getNearestEnabledAlarm(System.currentTimeMillis());
     }
 
-    public Record getNearestEnabledAlarm(long minimumTime) {
+    public Record getNearestEnabledAlarm(long minimumTime) throws UnsupportedOperationException {
         final Cursor cur = mContentResolver.query(
                 ALARM_URI,
                 null,
@@ -193,7 +193,7 @@ public class AlarmDatabase {
 
         if (cur == null) {
             Log.w("AlarmDatabase", "Cannot resolve provider for " + ALARM_URI);
-            return null;
+            throw new UnsupportedOperationException();
         }
 
         if (!cur.moveToFirst()) {

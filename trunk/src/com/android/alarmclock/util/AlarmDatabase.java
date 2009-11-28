@@ -23,7 +23,7 @@ import java.util.Calendar;
  * Project home: http://code.google.com/p/android-alarmclock-database/
  */
 public class AlarmDatabase {
-	public static final Uri ALARM_URI = Uri.parse("content://com.android.alarmclock/alarmclock");
+	public static final Uri ALARM_URI = Uri.parse("content://com.android.alarmclock/alarm");
 
 	private final ContentResolver mContentResolver;
 	private final ContentObserver mContentObserver;
